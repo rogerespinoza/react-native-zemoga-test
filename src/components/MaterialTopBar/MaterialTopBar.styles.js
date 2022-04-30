@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
   },
   boxTop_text: {
     fontSize: size.font.sz13,
+    fontSize: size.font.sz10,
     fontWeight: 'bold',
     color: color.primary.font1,
   },
@@ -27,7 +28,6 @@ export const styles = StyleSheet.create({
   boxBottom_column2: {
     flex: 1,
     height: size.width * 0.012 + 30,
-    // marginBottom: 2,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     flexDirection: 'row',

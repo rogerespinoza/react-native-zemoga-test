@@ -9,7 +9,7 @@ import Fill from '../../components/Fill/Fill';
 import ConfirmationPopup from '../../components/ConfirmationPopup/ConfirmationPopup';
 import ButtonFlotant from '../../components/ButtonFlotant/ButtonFlotant';
 
-export default function AllPosts() {
+export default function AllPosts({navigation}) {
   const [isVibleConfirmation, setIsVibleConfirmation] = useState(false);
 
   const hideConfirmation = () => {
@@ -17,6 +17,10 @@ export default function AllPosts() {
   };
   const showConfirmation = () => {
     setIsVibleConfirmation(true);
+  };
+
+  const onNavigateToUserDetails = () => {
+    navigation.navigate('UserDetails');
   };
 
   const keyExtractor = useCallback(({id}) => id);
@@ -38,7 +42,13 @@ export default function AllPosts() {
         />
         <FlatList
           data={posts}
-          renderItem={props => <PostItem favorite={true} {...props} />}
+          renderItem={props => (
+            <PostItem
+              onPress1={onNavigateToUserDetails}
+              favorite={true}
+              {...props}
+            />
+          )}
           keyExtractor={keyExtractor}
           maxToRenderPerBatch={200}
           getItemLayout={getItemLayout}

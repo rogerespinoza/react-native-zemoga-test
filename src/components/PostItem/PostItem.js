@@ -7,12 +7,16 @@ import {color, size} from '../../styles/index';
 
 import {styles} from './PostItem.styles';
 
-export default function PostItem({item, index, favorite, edit = false}) {
+export default function PostItem({
+  item,
+  index,
+  onPress1,
+  favorite,
+  edit = false,
+}) {
   const {title, id} = item;
   return (
-    <TouchableOpacity
-      key={id}
-      /* onPress={() => setSearch(item)} */ style={styles.container}>
+    <TouchableOpacity key={id} onPress={onPress1} style={styles.container}>
       <View style={styles.box1}>
         <View style={styles.readSignal} />
       </View>
