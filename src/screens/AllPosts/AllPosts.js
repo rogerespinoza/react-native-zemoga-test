@@ -1,13 +1,13 @@
 import React, {useCallback, useState} from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
-import TrashIcon from 'react-native-vector-icons/AntDesign';
+import {View, FlatList} from 'react-native';
 
 import {styles} from './AllPosts.styles';
-import {color, size} from '../../styles/index';
+import {size} from '../../styles/index';
 import SafeAreaContainer from '../../components/SafeAreaContainer/SafeAreaContainer';
 import PostItem from '../../components/PostItem/PostItem';
 import Fill from '../../components/Fill/Fill';
 import ConfirmationPopup from '../../components/ConfirmationPopup/ConfirmationPopup';
+import ButtonFlotant from '../../components/ButtonFlotant/ButtonFlotant';
 
 export default function AllPosts() {
   const [isVibleConfirmation, setIsVibleConfirmation] = useState(false);
@@ -38,17 +38,13 @@ export default function AllPosts() {
         />
         <FlatList
           data={posts}
-          renderItem={PostItem}
+          renderItem={props => <PostItem favorite={true} {...props} />}
           keyExtractor={keyExtractor}
           maxToRenderPerBatch={200}
           getItemLayout={getItemLayout}
           ListFooterComponent={<Fill />}
         />
-        <TouchableOpacity
-          onPress={showConfirmation}
-          style={styles.button_delete}>
-          <TrashIcon name={'delete'} size={25} color={color.primary.font1} />
-        </TouchableOpacity>
+        <ButtonFlotant onPress={showConfirmation} />
       </View>
     </SafeAreaContainer>
   );

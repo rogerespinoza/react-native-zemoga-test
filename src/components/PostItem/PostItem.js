@@ -7,7 +7,7 @@ import {color, size} from '../../styles/index';
 
 import {styles} from './PostItem.styles';
 
-export default function PostItem({item, index, disableFavorite}) {
+export default function PostItem({item, index, favorite, edit = false}) {
   const {title, id} = item;
   return (
     <TouchableOpacity
@@ -21,18 +21,31 @@ export default function PostItem({item, index, disableFavorite}) {
           {title}
         </Text>
       </View>
-      <View style={styles.box3}>
-        {!disableFavorite && (
-          <StarIcon name={'star'} size={20} color={'#a6a659'} />
-        )}
-      </View>
-      <View style={styles.box4}>
-        <ArrowIcon
-          name={'chevron-right'}
-          size={18}
-          color={color.primary.font1 + '77'}
-        />
-      </View>
+      {edit ? (
+        <View style={styles.box5}>
+          <TouchableOpacity>
+            <StarIcon
+              name={'delete'}
+              size={22}
+              color={'red'}
+              style={{marginRight: 10}}
+            />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <>
+          <View style={styles.box3}>
+            {favorite && <StarIcon name={'star'} size={20} color={'#a6a659'} />}
+          </View>
+          <View style={styles.box4}>
+            <ArrowIcon
+              name={'chevron-right'}
+              size={18}
+              color={color.primary.font1 + '77'}
+            />
+          </View>
+        </>
+      )}
     </TouchableOpacity>
   );
 }

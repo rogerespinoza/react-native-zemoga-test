@@ -32,6 +32,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  box5: {
+    flex: 6,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
   readSignal: {
     height: 10,
     width: 10,

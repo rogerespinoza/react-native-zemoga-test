@@ -17,7 +17,19 @@ export const styles = StyleSheet.create({
   boxBottom: {
     height: size.width * 0.012 + 30,
     alignItems: 'flex-end',
-    marginLeft: size.width * 0.04,
+    paddingHorizontal: size.width * 0.04,
+    flexDirection: 'row',
+  },
+  boxBottom_column1: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  boxBottom_column2: {
+    flex: 1,
+    height: size.width * 0.012 + 30,
+    // marginBottom: 2,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
     flexDirection: 'row',
   },
   boxBottom_button: {
@@ -32,5 +44,9 @@ export const styles = StyleSheet.create({
   boxBottom_button_line: {
     height: 2,
     backgroundColor: color.primary.font1,
+  },
+  boxBottom_icon: {
+    marginRight: size.width * 0.04,
+    marginBottom: 4,
   },
 });
