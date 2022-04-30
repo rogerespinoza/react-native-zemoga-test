@@ -1,12 +1,24 @@
-import React, {useCallback} from 'react';
-import {View, FlatList} from 'react-native';
-import PostItem from '../../components/PostItem/PostItem';
-import SafeAreaContainer from '../../components/SafeAreaContainer/SafeAreaContainer';
-import {color, size} from '../../styles/index';
+import React, {useCallback, useState} from 'react';
+import {View, FlatList, TouchableOpacity} from 'react-native';
+import TrashIcon from 'react-native-vector-icons/AntDesign';
 
 import {styles} from './AllPosts.styles';
+import {color, size} from '../../styles/index';
+import SafeAreaContainer from '../../components/SafeAreaContainer/SafeAreaContainer';
+import PostItem from '../../components/PostItem/PostItem';
+import Fill from '../../components/Fill/Fill';
+import ConfirmationPopup from '../../components/ConfirmationPopup/ConfirmationPopup';
 
 export default function AllPosts() {
+  const [isVibleConfirmation, setIsVibleConfirmation] = useState(false);
+
+  const hideConfirmation = () => {
+    setIsVibleConfirmation(false);
+  };
+  const showConfirmation = () => {
+    setIsVibleConfirmation(true);
+  };
+
   const keyExtractor = useCallback(({id}) => id);
   const getItemLayout = useCallback(
     (_, index) => ({
@@ -20,13 +32,23 @@ export default function AllPosts() {
   return (
     <SafeAreaContainer>
       <View style={styles.container}>
+        <ConfirmationPopup
+          isVisible={isVibleConfirmation}
+          onPress1={hideConfirmation}
+        />
         <FlatList
           data={posts}
           renderItem={PostItem}
           keyExtractor={keyExtractor}
           maxToRenderPerBatch={200}
           getItemLayout={getItemLayout}
+          ListFooterComponent={<Fill />}
         />
+        <TouchableOpacity
+          onPress={showConfirmation}
+          style={styles.button_delete}>
+          <TrashIcon name={'delete'} size={25} color={color.primary.font1} />
+        </TouchableOpacity>
       </View>
     </SafeAreaContainer>
   );
