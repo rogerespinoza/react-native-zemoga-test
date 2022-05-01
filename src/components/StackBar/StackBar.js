@@ -3,17 +3,37 @@ import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ArrowIcon from 'react-native-vector-icons/FontAwesome5';
 import StarIcon from 'react-native-vector-icons/AntDesign';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './StackBar.styles';
 import {color} from '../../styles/index';
+import {
+  postDataAddFavorite,
+  postDataHideFavorite,
+} from '../../services/redux/postData/actions';
 
-export default function StackBar({navigation, ...props}) {
+export default function StackBar({navigation, route, ...props}) {
   const insets = useSafeAreaInsets();
-
-  // console.log(props);
+  const posts = useSelector(({postData}) => postData.posts);
+  const {params} = route;
+  const {id} = params;
+  const dispatch = useDispatch();
 
   const onNavigationBack = () => {
     navigation.goBack();
+  };
+
+  const getStateFavorite = () => {
+    const item = posts.find(item => item.id == id);
+    return item.favorite;
+  };
+
+  const onChangeStateFavotite = () => {
+    if (getStateFavorite()) {
+      dispatch(postDataHideFavorite(id));
+    } else {
+      dispatch(postDataAddFavorite(id));
+    }
   };
 
   return (
@@ -37,11 +57,11 @@ export default function StackBar({navigation, ...props}) {
           <Text style={styles.boxTop_text}>Posts</Text>
         </View>
         <View style={styles.boxTop_column1}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onChangeStateFavotite}>
             <StarIcon
-              name={false ? 'star' : 'staro'}
+              name={getStateFavorite() ? 'star' : 'staro'}
               size={22}
-              color={false ? '#a6a659' : color.primary.font1}
+              color={getStateFavorite() ? '#a6a659' : color.primary.font1}
               style={styles.boxTop_column1_icon2}
             />
           </TouchableOpacity>

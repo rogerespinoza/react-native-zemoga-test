@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 
 import {styles} from './UserDetails.styles';
 import {size} from '../../styles/index';
@@ -7,7 +7,12 @@ import SafeAreaContainer from '../../components/SafeAreaContainer/SafeAreaContai
 import HeaderUserDetails from '../../components/HeaderUserDetails/HeaderUserDetails';
 import ComentsItem from '../../components/ComentsItem/ComentsItem';
 
-export default function UserDetails() {
+export default function UserDetails({route}) {
+  const {params} = route;
+  const {user} = params;
+
+  if (user == undefined) return null;
+
   const keyExtractor = useCallback(({id}) => id);
   const getItemLayout = useCallback(
     (_, index) => ({
@@ -26,10 +31,8 @@ export default function UserDetails() {
           keyExtractor={keyExtractor}
           maxToRenderPerBatch={200}
           getItemLayout={getItemLayout}
-          ListHeaderComponent={<HeaderUserDetails />}
-          // ListFooterComponent={<Fill />}
+          ListHeaderComponent={<HeaderUserDetails params={params} />}
         />
-        {/* <ButtonFlotant onPress={showConfirmation} /> */}
       </View>
     </SafeAreaContainer>
   );

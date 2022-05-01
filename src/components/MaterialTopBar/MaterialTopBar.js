@@ -1,16 +1,73 @@
 import {View, Text, Animated, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import EditIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './MaterialTopBar.styles';
 import {color} from '../../styles/index';
+import {appDataConfigUpdate} from '../../services/redux/appDataConfig/actions';
+import {postDataTry} from '../../services/redux/postData/actions';
 
 export default function MaterialTopBar({state, position, navigation}) {
   const {index, routeNames} = state;
+  const all = useSelector(({appDataConfig}) => appDataConfig.all);
+  const favorites = useSelector(({appDataConfig}) => appDataConfig.favorites);
   const insets = useSafeAreaInsets();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    disableEdit();
+  }, [index]);
 
   const onNavigate = route => navigation.navigate(route);
+
+  const getStateButtonEdit = () => {
+    if (index == 0) return all.edit;
+    else return favorites.edit;
+  };
+
+  const handleEditFunction = () => {
+    if (index == 0) {
+      dispatch(
+        appDataConfigUpdate({
+          all: {
+            ...all,
+            edit: !all.edit,
+          },
+        }),
+      );
+    } else {
+      dispatch(
+        appDataConfigUpdate({
+          favorites: {
+            ...favorites,
+            edit: !favorites.edit,
+          },
+        }),
+      );
+    }
+  };
+
+  const disableEdit = () => {
+    if (all.edit || favorites.edit)
+      dispatch(
+        appDataConfigUpdate({
+          all: {
+            ...all,
+            edit: false,
+          },
+          favorites: {
+            ...favorites,
+            edit: false,
+          },
+        }),
+      );
+  };
+
+  const getDataPost = () => {
+    dispatch(postDataTry());
+  };
 
   const handleAnimation = index => {
     const inputRange1 = state.routes.map((_, i) => i);
@@ -59,7 +116,7 @@ export default function MaterialTopBar({state, position, navigation}) {
         </View>
         <View style={styles.boxBottom_column2}>
           {index == 0 && (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={getDataPost}>
               <EditIcon
                 name={'reload'}
                 size={22}
@@ -68,9 +125,13 @@ export default function MaterialTopBar({state, position, navigation}) {
               />
             </TouchableOpacity>
           )}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleEditFunction}>
             <EditIcon
-              name={false ? 'application-edit' : 'application-edit-outline'}
+              name={
+                getStateButtonEdit()
+                  ? 'application-edit'
+                  : 'application-edit-outline'
+              }
               size={21}
               color={color.primary.font1}
               style={styles.boxBottom_icon}

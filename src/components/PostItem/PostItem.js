@@ -7,18 +7,13 @@ import {color, size} from '../../styles/index';
 
 import {styles} from './PostItem.styles';
 
-export default function PostItem({
-  item,
-  index,
-  onPress1,
-  favorite,
-  edit = false,
-}) {
-  const {title, id} = item;
+export default function PostItem({item, onPress1, onPress2, edit = false}) {
+  const {title, id, unReaded, favorite} = item;
+
   return (
     <TouchableOpacity key={id} onPress={onPress1} style={styles.container}>
       <View style={styles.box1}>
-        <View style={styles.readSignal} />
+        {unReaded && <View style={styles.readSignal} />}
       </View>
       <View style={styles.box2}>
         <Text numberOfLines={3} style={styles.text}>
@@ -27,7 +22,7 @@ export default function PostItem({
       </View>
       {edit ? (
         <View style={styles.box5}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPress2}>
             <StarIcon
               name={'delete'}
               size={22}
