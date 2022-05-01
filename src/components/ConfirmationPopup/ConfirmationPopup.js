@@ -11,7 +11,7 @@ export default function ConfirmationPopup({isVisible, onPress1, onPress2}) {
           onPress={onPress1}
           activeOpacity={1}
           style={styles.backgroundButton}>
-          <View style={styles.boxMessage}>
+          <TouchableOpacity activeOpacity={1} style={styles.boxMessage}>
             <View style={styles.boxMessage_row1}>
               <Text style={styles.boxMessage_row1_text}>
                 Are you sure you want to continue?
@@ -27,7 +27,7 @@ export default function ConfirmationPopup({isVisible, onPress1, onPress2}) {
                 </Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
         </TouchableOpacity>
       </View>
     </Modal>

@@ -24,28 +24,21 @@ export default (state = initialState, action) => {
         } else return item;
       });
 
+      const unreadFilter = state.unreaded.filter(
+        item => item != action.payload,
+      );
+
       return {
         ...state,
-        posts: postsAux,
+        unreaded: unreadFilter,
       };
 
     case postDataTypes.POST_DATA_ADD_FAVORITE:
-      const postsAddFavorite = state.posts.map(item => {
-        if (item.id == action.payload) {
-          return {
-            ...item,
-            favorite: true,
-          };
-        } else return item;
-      });
       const item = state.posts.find(item => item.id == action.payload);
-      const postsFavorite = postsAddFavorite.filter(
-        item => item.favorite == true,
+      const postsWithourItem = state.posts.filter(
+        item => item.id != action.payload,
       );
-      const postsNoFavorite = postsAddFavorite.filter(
-        item => item.favorite != true,
-      );
-      const postsNewOrder = [...postsFavorite, ...postsNoFavorite];
+      const postsNewOrder = [item, ...postsWithourItem];
 
       return {
         ...state,
@@ -61,7 +54,6 @@ export default (state = initialState, action) => {
         if (item.id == action.payload) {
           return {
             ...item,
-            favorite: false,
           };
         } else return item;
       });

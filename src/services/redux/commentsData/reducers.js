@@ -1,26 +1,26 @@
-import {usersDataTypes} from '../root_actions';
+import {commentsDataTypes} from '../root_actions';
 
 export const initialState = {
-  users: [],
+  comments: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case usersDataTypes.USERS_DATA_UPDATE:
+    case commentsDataTypes.COMMENTS_DATA_UPDATE:
       return {
         ...state,
         ...action.payload,
       };
-    case usersDataTypes.USERS_DATA_TRY:
+    case commentsDataTypes.COMMENTS_DATA_TRY:
       return {
         ...state,
       };
-    case usersDataTypes.USERS_DATA_SUCCESS:
+    case commentsDataTypes.COMMENTS_DATA_SUCCESS:
       return {
         ...state,
         ...action.payload,
       };
-    case usersDataTypes.USERS_DATA_FAILED:
+    case commentsDataTypes.COMMENTS_DATA_FAILED:
       return {
         ...state,
       };

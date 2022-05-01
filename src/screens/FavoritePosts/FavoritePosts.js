@@ -3,7 +3,7 @@ import {View, FlatList} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {styles} from './FavoritePosts.styles';
-import {size, color} from '../../styles/index';
+import {size} from '../../styles/index';
 import PostItem from '../../components/PostItem/PostItem';
 import SafeAreaContainer from '../../components/SafeAreaContainer/SafeAreaContainer';
 import Fill from '../../components/Fill/Fill';
@@ -14,6 +14,7 @@ import {
   postDataUpdate,
 } from '../../services/redux/postData/actions';
 import {appDataConfigUpdate} from '../../services/redux/appDataConfig/actions';
+import {commentsDataTry} from '../../services/redux/commentsData/actions';
 
 export default function FavoritePosts({navigation}) {
   const [isVibleConfirmation, setIsVibleConfirmation] = useState(false);
@@ -35,6 +36,7 @@ export default function FavoritePosts({navigation}) {
 
   const onNavigateToUserDetails = ({item}) => {
     const {id, body} = item;
+    dispatch(commentsDataTry(id));
     const user = users.find(item => item.id == id);
     disableEdit();
     navigation.navigate('UserDetails', {user, id, body});
@@ -91,6 +93,7 @@ export default function FavoritePosts({navigation}) {
               onPress1={() => onNavigateToUserDetails(props)}
               onPress2={() => onDeleteItem(props)}
               edit={favoritesConfig.edit}
+              enableFavorite={false}
               screen="favorites"
               {...props}
             />

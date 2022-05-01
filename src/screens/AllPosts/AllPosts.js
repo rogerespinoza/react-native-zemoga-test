@@ -15,6 +15,10 @@ import {
   postDataUpdate,
 } from '../../services/redux/postData/actions';
 import {appDataConfigUpdate} from '../../services/redux/appDataConfig/actions';
+import {
+  commentsDataTry,
+  commentsDataUpdate,
+} from '../../services/redux/commentsData/actions';
 
 export default function AllPosts({navigation}) {
   const all = useSelector(({appDataConfig}) => appDataConfig.all);
@@ -32,8 +36,9 @@ export default function AllPosts({navigation}) {
   };
 
   const onNavigateToUserDetails = ({item}) => {
-    const {id, body} = item;
-    const user = users.find(item => item.id == id);
+    const {id, body, userId} = item;
+    dispatch(commentsDataTry(id));
+    const user = users.find(item => item.id == userId);
     dispatch(postDataDisableUnread(id));
     disableEdit();
     navigation.navigate('UserDetails', {user, id, body});
@@ -56,6 +61,7 @@ export default function AllPosts({navigation}) {
 
   const onDeletePosts = () => {
     dispatch(postDataUpdate({posts: [], favorites: []}));
+    dispatch(commentsDataUpdate({comments: []}));
     setIsVibleConfirmation(false);
   };
 

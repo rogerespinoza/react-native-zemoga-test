@@ -4,11 +4,11 @@ import React from 'react';
 import {styles} from './ComentsItem.styles';
 
 export default function ComentsItem({item}) {
-  const {title, id} = item;
+  const {id, body} = item;
   return (
     <View key={id} style={styles.container}>
       <Text numberOfLines={3} style={styles.text}>
-        {title}
+        {body}
       </Text>
     </View>
   );

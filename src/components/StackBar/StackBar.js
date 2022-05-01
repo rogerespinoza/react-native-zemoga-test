@@ -15,6 +15,7 @@ import {
 export default function StackBar({navigation, route, ...props}) {
   const insets = useSafeAreaInsets();
   const posts = useSelector(({postData}) => postData.posts);
+  const favorites = useSelector(({postData}) => postData.favorites);
   const {params} = route;
   const {id} = params;
   const dispatch = useDispatch();
@@ -24,8 +25,7 @@ export default function StackBar({navigation, route, ...props}) {
   };
 
   const getStateFavorite = () => {
-    const item = posts.find(item => item.id == id);
-    return item.favorite;
+    return favorites.some(item => item.id == id);
   };
 
   const onChangeStateFavotite = () => {
